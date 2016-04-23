@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>GMaps.js &mdash; Geolocation</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="../gmaps.js"></script>
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <script type="text/javascript">
+    var map;
+
+    var latOffset = 19.66468;
+    var lonOffset = -145.014013;
+
+    var latitude = 70.383092;
+    var longitude = -148.547912;
+
+    $(document).ready(function(){
+      var map = new GMaps({
+        el: '#map',
+        zoom: 16,
+        lat: latitude,
+        lng: longitude,
+        mapType: 'SATELLITE'
+      });
+
+      if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(changePosition);
+      } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+
+      function changePosition(position) {
+        map.setCenter(position.coords.latitude + latOffset, position.coords.longitude + lonOffset);
+        map.addMarker({
+          lat: position.coords.latitude + latOffset,
+          lng: position.coords.longitude + lonOffset,
+          draggable: true
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Vanilla &mdash; Hunter Safety App</h1>
+  <div class="row">
+    <div class="span11">
+      <div id="map"></div>
+    </div>
+  </div>
+</body>
+</html>
