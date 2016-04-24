@@ -46,7 +46,7 @@ function init() {
     });
 
   dangerOne.setMap(map);
-  
+
     if (navigator.geolocation) {// if we have geolocation
         navigator.geolocation.getCurrentPosition(watchCurrentPosition, error, {
             enableHighAccuracy : true,
@@ -66,7 +66,6 @@ function setUserLocation(pos) {
            map : map,
            position : new google.maps.LatLng(modLat, modLong)
 	});
-
 
     // move map to userLocation
     map.panTo(new google.maps.LatLng(modLat, modLong));
@@ -89,10 +88,8 @@ function watchCurrentPosition(pos) {
 }
 
 function setMarkerPosition(marker, modLat, modLong) {
-     marker.setPosition(new google.maps.LatLng(modLat, modLong));
-     // console.log("modLat: "+modLat);
-     // console.log("modLong: "+modLong);
-     var currentPosition = new google.maps.LatLng(modLat, modLong);
+    marker.setPosition(new google.maps.LatLng(modLat, modLong));
+    var currentPosition = new google.maps.LatLng(modLat, modLong);
     var resultColor =
         google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
         'inside' :
