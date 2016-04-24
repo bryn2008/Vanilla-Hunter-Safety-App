@@ -1,17 +1,17 @@
 // var latOffset = 20.585765,
 //     longOffset = -153.305191;
 
-var latOffset = 20.825,// outside
-    longOffset = -153.305;
+// torquay testing
 
-$(document).ready(function(){
-    init();
-})
+// outside
+// var latOffset = 20.825;
+// var longOffset = -153.305;
 
-function init() {
-    map = new google.maps.Map(document.getElementById('map-canvas'), {
-          zoom : 8
-    });
+// inside
+var latOffset = 20.825,
+    longOffset = -153.300;
+
+
 
 // Define the LatLng coordinates for the polygon's path.
 
@@ -34,7 +34,50 @@ function init() {
     fillColor: '#FF0000',
     fillOpacity: 0.35
   });
+
+
+$(document).ready(function(){
+    init();
+})
+
+function init() {
+    map = new google.maps.Map(document.getElementById('map-canvas'), {
+          zoom : 10
+    });
+
+
+
+  google.maps.event.addListener(map, 'click', function(e) {
+    console.log(e.latLng.lat);
+    console.log(e);
+    var resultColor =
+        google.maps.geometry.poly.containsLocation(e.latLng, dangerOne) ?
+        'red' :
+        'green';
+
+    new google.maps.Marker({
+      position: e.latLng,
+      map: map,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: resultColor,
+        fillOpacity: .2,
+        strokeColor: 'white',
+        strokeWeight: .5,
+        scale: 10
+      }
+
+
+    });
+
+  });
+
+
+
+
   dangerOne.setMap(map);
+
+
 
 
 
@@ -61,7 +104,6 @@ function setUserLocation(pos) {
 
     // move map to userLocation
     map.panTo(new google.maps.LatLng(modLat, modLong));
-    initialised = true;
 }
 
 function watchCurrentPosition(pos) {
@@ -77,12 +119,19 @@ function watchCurrentPosition(pos) {
         setMarkerPosition(userLocation, modLat, modLong);
         map.panTo(new google.maps.LatLng(modLat, modLong));
     });
+    var currentPosition = new google.maps.LatLng(modLat, modLong);
+    var resultColor =
+        google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
+        'inside' :
+        'outside';
+
+    console.log(resultColor);
 }
 
 function setMarkerPosition(marker, modLat, modLong) {
      marker.setPosition(new google.maps.LatLng(modLat, modLong));
-     console.log("modLat: "+modLat);
-     console.log("modLong: "+modLong);
+     // console.log("modLat: "+modLat);
+     // console.log("modLong: "+modLong);
 }
 
 function error(error) {
