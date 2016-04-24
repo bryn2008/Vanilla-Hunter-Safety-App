@@ -119,19 +119,20 @@ function watchCurrentPosition(pos) {
         setMarkerPosition(userLocation, modLat, modLong);
         map.panTo(new google.maps.LatLng(modLat, modLong));
     });
-    var currentPosition = new google.maps.LatLng(modLat, modLong);
-    var resultColor =
-        google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
-        'inside' :
-        'outside';
-
-    console.log(resultColor);
+    
 }
 
 function setMarkerPosition(marker, modLat, modLong) {
      marker.setPosition(new google.maps.LatLng(modLat, modLong));
      // console.log("modLat: "+modLat);
      // console.log("modLong: "+modLong);
+     var currentPosition = new google.maps.LatLng(modLat, modLong);
+    var resultColor =
+        google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
+        'inside' :
+        'outside';
+
+    console.log(resultColor);
 }
 
 function error(error) {
