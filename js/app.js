@@ -1,6 +1,8 @@
-var initialised = false,
-    latOffset = 20.585765,
-    longOffset = -153.305191;
+// var latOffset = 20.585765,
+//     longOffset = -153.305191;
+
+var latOffset = 20.825,// outside
+    longOffset = -153.305;
 
 $(document).ready(function(){
     init();
@@ -8,8 +10,33 @@ $(document).ready(function(){
 
 function init() {
     map = new google.maps.Map(document.getElementById('map-canvas'), {
-          zoom : 17
+          zoom : 8
     });
+
+// Define the LatLng coordinates for the polygon's path.
+
+  var dangerOneCoords = [
+        {lat: 71.300, lng: -156.800},
+        {lat: 71.297, lng: -156.789},
+        {lat: 71.293, lng: -156.794},
+        {lat: 71.291, lng: -156.812},
+        {lat: 71.296, lng: -156.831},
+        {lat: 71.298, lng: -156.815},
+        {lat: 71.300, lng: -156.800}
+  ];
+
+  // Construct the polygon.
+  var dangerOne = new google.maps.Polygon({
+    paths: dangerOneCoords,
+    strokeColor: '#FF0000',
+    strokeOpacity: 0.8,
+    strokeWeight: 2,
+    fillColor: '#FF0000',
+    fillOpacity: 0.35
+  });
+  dangerOne.setMap(map);
+
+
 
     if (navigator.geolocation) {// if we have geolocation
         navigator.geolocation.getCurrentPosition(watchCurrentPosition, error, {
@@ -30,6 +57,7 @@ function setUserLocation(pos) {
            map : map,
            position : new google.maps.LatLng(modLat, modLong)
 	});
+
 
     // move map to userLocation
     map.panTo(new google.maps.LatLng(modLat, modLong));
