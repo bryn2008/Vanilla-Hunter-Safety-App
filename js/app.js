@@ -3,6 +3,7 @@ var lngAlaska = -156.801;
 
 var latFirst = null;
 var lonFirst = null;
+var userLocation = null;
 
 
 // Define the LatLng coordinates for the polygon's path.
@@ -40,7 +41,7 @@ function init() {
   dangerOne.setMap(map);
 
     if (navigator.geolocation) {// if we have geolocation
-        navigator.geolocation.getCurrentPosition(watchCurrentPosition, error, {
+        navigator.geolocation.watchPosition(watchCurrentPosition, error, {
             enableHighAccuracy : true,
             timeout : 60000, // give up after 6 seconds
             maximumAge : 0
@@ -56,23 +57,22 @@ function watchCurrentPosition(pos) {
         console.log("first run");
         latFirst = pos.coords.latitude;
         lonFirst = pos.coords.longitude;
+
     }
 
     var modLat = latAlaska + (pos.coords.latitude - latFirst);
     var modLong = lngAlaska + (lonFirst - pos.coords.longitude);
 
-    // marker for userLocation
-    userLocation = new google.maps.Marker({
-           map : map,
-           position : new google.maps.LatLng(modLat, modLong)
-    });
-
-    var positionTimer = navigator.geolocation.watchPosition(function(position) {
-        console.log("updating "+modLat+' '+modLong);
-        $("#debug h2").replaceWith( "<h2>"+modLat+" "+modLong+"</h2>" );
-        setMarkerPosition(userLocation, modLat, modLong);
-        map.panTo(new google.maps.LatLng(modLat, modLong));
-    });
+    if (userLocation == null) {
+        userLocation = new google.maps.Marker({
+            map : map,
+            position : new google.maps.LatLng(modLat, modLong)
+        });
+    }
+    console.log("updating "+modLat+' '+modLong);
+    $("#debug h2").replaceWith( "<h2>"+modLat+" "+modLong+"</h2>" );
+    setMarkerPosition(userLocation, modLat, modLong);
+    map.panTo(new google.maps.LatLng(modLat, modLong));
     
 }
 
