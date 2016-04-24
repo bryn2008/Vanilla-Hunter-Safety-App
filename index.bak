@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vanilla Safety</title>
+  <link rel="apple-touch-icon" href="/image/icon.png" />
+  <link rel="apple-touch-icon" sizes="72×72" href="/image/icon.png" />
+  <link rel="apple-touch-icon" sizes="114×114" href="/image/icon.png" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="gmaps.js"></script>
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <script type="text/javascript">
+    var map;
+
+    var latOffset = 20.585765;
+    var lonOffset = -153.305191;
+
+    var latitude = 71.305000;
+    var longitude = -156.80002;
+
+    var hazardPath = [[
+      [71.300682, -156.800994],
+      [71.297930, -156.789836],
+      [71.293471, -156.794471],
+      [71.291269, -156.812667],
+      [71.296169, -156.831035],
+      [71.298756, -156.815414],
+      [71.300297, -156.804599]
+    ],[
+      [71.311191, -156.77370071411133],
+      [71.311576, -156.79344177246094],
+      [71.311081, -156.80477142333984],
+      [71.307560, -156.80253982543945],
+      [71.303324, -156.79790496826172],
+      [71.30112312126651, -156.78348541259766],
+      [71.30315926052853, -156.77129745483398],
+      [71.30706584795533, -156.76855087280273]
+    ],[
+      [71.30447988519431, -156.80425643920898],
+      [71.30937641647093, -156.80974960327148],
+      [71.30992651123898, -156.82880401611328],
+      [71.30888131783124, -156.84167861938477],
+      [71.30365450531914, -156.83961868286133],
+      [71.30029759849414, -156.8269157409668],
+      [71.30002241642738, -156.81421279907227],
+      [71.30238885460028, -156.8052864074707]
+    ]];
+
+    $(document).ready(function(){
+      var map = new GMaps({
+        el: '#map',
+        zoom: 16,
+        lat: latitude,
+        lng: longitude,
+        mapType: 'SATELLITE'
+      });
+
+      if (navigator.geolocation) {
+          navigator.geolocation.watchPosition(changePosition);
+      } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+
+      var thinIce = map.drawPolygon({
+        paths: hazardPath[0],
+        strokeColor: '#BBD8E9',
+        strokeOpacity: 1,
+        strokeWeight: 3,
+        fillColor: '#BBD8E9',
+        fillOpacity: 0.6
+      });
+      var crack = map.drawPolygon({
+        paths: hazardPath[1],
+        strokeColor: '#BBD8E9',
+        strokeOpacity: 1,
+        strokeWeight: 3,
+        fillColor: '#BBD8E9',
+        fillOpacity: 0.6
+      });
+      var hole = map.drawPolygon({
+        paths: hazardPath[2],
+        strokeColor: '#BBD8E9',
+        strokeOpacity: 1,
+        strokeWeight: 3,
+        fillColor: '#BBD8E9',
+        fillOpacity: 0.6
+      });
+
+      function changePosition(position) {
+        console.log("updating");
+        map.setCenter(position.coords.latitude + latOffset, position.coords.longitude + lonOffset);
+        map.addMarker({
+          lat: position.coords.latitude + latOffset,
+          lng: position.coords.longitude + lonOffset,
+          draggable: true,
+          fences: [thinIce,crack,hole],
+          inside: function(m, f){
+            if ("vibrate" in navigator ){
+              navigator.vibrate([3000, 2000, 1000]);
+            };
+            alert('You are in DANGER!');
+          }
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1>Vanilla &mdash; Hunter Safety App</h1>
+  <div class="row">
+    <div class="span11">
+      <div id="map"></div>
+    </div>
+  </div>
+</body>
+</html>
