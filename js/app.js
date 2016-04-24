@@ -1,16 +1,8 @@
-// var latOffset = 20.585765,
-//     longOffset = -153.305191;
+var latAlaska = 71.2999;
+var lngAlaska = -156.801;
 
-// torquay testing
-
-// outside
-// var latOffset = 20.825;
-// var longOffset = -153.305;
-
-// inside
-var latOffset = 20.825,
-    longOffset = -153.300;
-
+var latFirst = null;
+var lonFirst = null;
 
 
 // Define the LatLng coordinates for the polygon's path.
@@ -59,8 +51,15 @@ function init() {
 }
 
 function watchCurrentPosition(pos) {
-    modLat = pos.coords.latitude + latOffset;
-    modLong = pos.coords.longitude + longOffset;
+
+    if (( latFirst == null ) && ( lonFirst == null )) {
+        latFirst = pos.coords.latitude;
+        lonFirst = pos.coords.longitude;
+    }
+
+    var modLat = latAlaska + (pos.coords.latitude - latFirst);
+    var modLong = lngAlaska + (lonFirst - pos.coords.longitude);
+
     // marker for userLocation
     userLocation = new google.maps.Marker({
            map : map,
