@@ -58,19 +58,6 @@ function init() {
     }
 }
 
-function setUserLocation(pos) {
-    modLat = pos.coords.latitude + latOffset;
-    modLong = pos.coords.longitude + longOffset;
-    // marker for userLocation
-    userLocation = new google.maps.Marker({
-           map : map,
-           position : new google.maps.LatLng(modLat, modLong)
-	});
-
-    // move map to userLocation
-    map.panTo(new google.maps.LatLng(modLat, modLong));
-}
-
 function watchCurrentPosition(pos) {
     modLat = pos.coords.latitude + latOffset;
     modLong = pos.coords.longitude + longOffset;
@@ -90,12 +77,12 @@ function watchCurrentPosition(pos) {
 function setMarkerPosition(marker, modLat, modLong) {
     marker.setPosition(new google.maps.LatLng(modLat, modLong));
     var currentPosition = new google.maps.LatLng(modLat, modLong);
-    var resultColor =
+    var result =
         google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
         'inside' :
         'outside';
 
-    console.log(resultColor);
+    console.log(result);
 }
 
 function error(error) {
