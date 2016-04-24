@@ -1,5 +1,5 @@
-// var latOffset = 20.585765,
-//     longOffset = -153.305191;
+var latOffset = 20.585765,
+    longOffset = -153.305191;
 
 // torquay testing
 
@@ -8,8 +8,8 @@
 // var longOffset = -153.305;
 
 // inside
-var latOffset = 20.825,
-    longOffset = -153.300;
+// var latOffset = 20.825,
+//     longOffset = -153.300;
 
 
 
