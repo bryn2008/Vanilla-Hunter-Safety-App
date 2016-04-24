@@ -79,10 +79,22 @@ function setMarkerPosition(marker, modLat, modLong) {
     var currentPosition = new google.maps.LatLng(modLat, modLong);
     var result =
         google.maps.geometry.poly.containsLocation(currentPosition, dangerOne) ?
-        'inside' :
-        'outside';
+        alertRaised() :
+        alertCancelled();
 
-    console.log(result);
+    // console.log(result);
+}
+
+function alertRaised(){
+    // alert("ALERT!");
+    // alert stuff
+    $('#alert').show();
+}
+
+function alertCancelled(){
+    console.log("Alert cancelled");
+    // cancel alert stuff
+    $('#alert').hide();
 }
 
 function error(error) {

@@ -12,4 +12,9 @@ html, body{
 
 #alert {
 	display: none;
+	padding: 50px;
+	text-align: center;
+	font-weight: bold;
+	background-color: red;
+	font-family: arial;
 }
