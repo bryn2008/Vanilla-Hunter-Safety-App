@@ -45,42 +45,8 @@ function init() {
           zoom : 10
     });
 
-
-
-  google.maps.event.addListener(map, 'click', function(e) {
-    console.log(e.latLng.lat);
-    console.log(e);
-    var resultColor =
-        google.maps.geometry.poly.containsLocation(e.latLng, dangerOne) ?
-        'red' :
-        'green';
-
-    new google.maps.Marker({
-      position: e.latLng,
-      map: map,
-      icon: {
-        path: google.maps.SymbolPath.CIRCLE,
-        fillColor: resultColor,
-        fillOpacity: .2,
-        strokeColor: 'white',
-        strokeWeight: .5,
-        scale: 10
-      }
-
-
-    });
-
-  });
-
-
-
-
   dangerOne.setMap(map);
-
-
-
-
-
+  
     if (navigator.geolocation) {// if we have geolocation
         navigator.geolocation.getCurrentPosition(watchCurrentPosition, error, {
             enableHighAccuracy : true,
