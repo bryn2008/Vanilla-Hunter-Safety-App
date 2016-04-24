@@ -53,6 +53,7 @@ function init() {
 function watchCurrentPosition(pos) {
 
     if (( latFirst == null ) && ( lonFirst == null )) {
+        console.log("first run");
         latFirst = pos.coords.latitude;
         lonFirst = pos.coords.longitude;
     }
@@ -67,6 +68,8 @@ function watchCurrentPosition(pos) {
     });
 
     var positionTimer = navigator.geolocation.watchPosition(function(position) {
+        console.log("updating "+modLat+' '+modLong);
+        $("#debug h2").replaceWith( "<h2>"+modLat+" "+modLong+"</h2>" );
         setMarkerPosition(userLocation, modLat, modLong);
         map.panTo(new google.maps.LatLng(modLat, modLong));
     });
