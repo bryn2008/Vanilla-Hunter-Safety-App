@@ -7,7 +7,16 @@ html, body{
 
 #map-canvas{
     width: 100%;
-    height: 100%;
+    height: 50%;
+}
+
+.ui {
+	height: 50%;
+	height: 50%;
+	background: url("../images/ui.png") #E01F33;
+	background-repeat: no-repeat;
+	background-position: top center, 50%, top left;
+	background-size: 100%;
 }
 
 #alert {
