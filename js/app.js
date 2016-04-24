@@ -91,6 +91,7 @@ function alertRaised(){
     // alert("ALERT!");
     // alert stuff
     $('#alert').show();
+    navigator.vibrate([3000, 2000, 1000]);
 }
 
 function alertCancelled(){
